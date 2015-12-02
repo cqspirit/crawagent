@@ -17,7 +17,8 @@ RUN \
 RUN \
   yum groupinstall -y development && \
   yum install -y zlib-dev openssl-devel sqlite-devel bzip2-devel wget curl && \
-  yum install -y xz-libs vim expect 
+  yum install -y xz-libs vim expect && \
+  yum clean all
   
 RUN \
   cd /tmp && \
