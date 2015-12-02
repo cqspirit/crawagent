@@ -30,10 +30,10 @@ RUN \
   curl https://raw.githubusercontent.com/pypa/pip/master/contrib/get-pip.py | python - && \
   pip install virtualenv 
   
-RUN \
-  cd /usr/bin/ && \ 
-  wget http://soft.6estates.com/phantomjs && \
-  chmod a+x phantomjs
+#RUN \
+#  cd /usr/bin/ && \ 
+#  wget http://soft.6estates.com/phantomjs && \
+#  chmod a+x phantomjs
   
 
 # Add supervisord conf, bootstrap.sh files
