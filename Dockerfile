@@ -51,9 +51,9 @@ RUN \
 # Add supervisord conf, bootstrap.sh files
 ADD container-files /
 # - add app path
-ADD /opt/craw  /opt/craw/
+ADD /opt/crawl  /opt/crawl
 # - add log path
-Add /data/log   /tmp/
 VOLUME ["/data"]
+VOLUME ["/public/log/", "/tmp"] 
 
 ENTRYPOINT ["/config/bootstrap.sh"]
