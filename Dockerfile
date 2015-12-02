@@ -39,7 +39,8 @@ RUN \
     yum install -y gcc gcc-c++ make flex bison gperf ruby  openssl-devel freetype-devel fontconfig-devel libicu-devel sqlite-devel libpng-devel libjpeg-devel && \
     git clone --recursive git://github.com/ariya/phantomjs.git  && \
     cd phantomjs  && \
-    ./build.py 
+    ./build.py  && \
+    cp ./bin/phantomjs /usr/bin 
 # env
 ENV CRAW_USER  dc-agent
 ENV CRAW_PW    crawler@next
