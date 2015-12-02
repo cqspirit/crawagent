@@ -35,11 +35,25 @@ RUN \
 # -  cd /usr/bin/ && \ 
 # -  wget http://soft.6estates.com/phantomjs && \
 # -  chmod a+x phantomjs
-  
+RUN \
+    yum install -y gcc gcc-c++ make flex bison gperf ruby  openssl-devel freetype-devel fontconfig-devel libicu-devel sqlite-devel libpng-devel libjpeg-devel && \
+    git clone --recursive git://github.com/ariya/phantomjs.git  && \
+    cd phantomjs  && \
+    ./build.py 
+# env
+ENV CRAW_USER  dc-agent
+ENV CRAW_PW    crawler@next
+RUN \
+    set +e && \
+    useradd $CRAW_USER -M -p $CRAW_PW && \
+    set -e
 
 # Add supervisord conf, bootstrap.sh files
 ADD container-files /
-
+# - add app path
+ADD /opt/craw  /opt/craw/
+# - add log path
+Add /data/log   /tmp/
 VOLUME ["/data"]
 
 ENTRYPOINT ["/config/bootstrap.sh"]
