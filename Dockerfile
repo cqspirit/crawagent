@@ -52,7 +52,7 @@ RUN \
 ADD container-files / 
 
 RUN \
-  cd /config/crawl/ 
+  cd /config/crawl/ && \
   pip install -r manager-requirement.txt && \
   pip install -r agent-agent-requirement.txt
 
