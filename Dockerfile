@@ -6,6 +6,19 @@ MAINTAINER geyong geyong.cq@gmail.com
 # - Install inotify, needed to automate daemon restarts after config file changes
 # - Install supervisord (via python's easy_install - as it has the newest 3.x version)
 # - Install yum-utils so we have yum-config-manager tool available
+RUN yum -y update && \
+    yum groupinstall -y development && \
+    yum install -y zlib-dev openssl-devel sqlite-devel bzip2-devel wget && \
+    yum install xz-libs -y
+    
+RUN cd /tmp && rm -rf Python-2.7.6.tar.xz && \
+    wget http://www.python.org/ftp/python/2.7.6/Python-2.7.6.tar.xz && \
+    xz -d Python-2.7.6.tar.xz && \
+    tar -xvf Python-2.7.6.tar && \
+    cd Python-2.7.6 && \
+    ./configure --prefix=/usr/local && \
+    make && make install
+
 RUN \
   yum update -y && \
   yum install -y epel-release && \
