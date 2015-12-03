@@ -18,6 +18,10 @@ RUN cd /tmp && rm -rf Python-2.7.6.tar.xz && \
     cd Python-2.7.6 && \
     ./configure --prefix=/usr/local && \
     make && make install
+    
+RUN rm -rf /usr/bin/python && \
+    ln -s /usr/local/bin/python2.7 /usr/bin/python && \
+    sed -i 's|#!/usr/bin/python|#!/usr/bin/python2.6|g' /usr/bin/yum && \
 
 RUN \
   yum update -y && \
