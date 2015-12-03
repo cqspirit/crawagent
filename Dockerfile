@@ -48,26 +48,24 @@ RUN \
 RUN \
   curl https://raw.githubusercontent.com/pypa/pip/master/contrib/get-pip.py | python - && \
   pip install virtualenv 
-  
+
+ADD container-files / 
 ADD /opt/crawl /opt/crawl
 RUN \
-  cd /opt/crawl/manager && \
-  virtualenv .env&& . .env/bin/activate&& \
-  pip install -r requirement.txt && \
-  cd /opt/crawl/agent &&\
-  virtualenv .env&& . .env/bin/activate&& \
-  pip install -r agent-requirement.txt
+  cd /config/crawl/ 
+  pip install -r manager-requirement.txt && \
+  pip install -r agent-agent-requirement.txt
 
 # - RUN \
 # -  cd /usr/bin/ && \ 
 # -  wget http://soft.6estates.com/phantomjs && \
 # -  chmod a+x phantomjs
-#RUN \
-#    yum install -y gcc gcc-c++ make flex bison gperf ruby  openssl-devel freetype-devel fontconfig-devel libicu-devel sqlite-devel libpng-devel libjpeg-devel && \
-#    git clone --recursive git://github.com/ariya/phantomjs.git  && \
-#    cd phantomjs  && \
-#    ./build.py  && \
-#    cp ./bin/phantomjs /usr/bin 
+RUN \
+    yum install -y gcc gcc-c++ make flex bison gperf ruby  openssl-devel freetype-devel fontconfig-devel libicu-devel sqlite-devel libpng-devel libjpeg-devel && \
+    git clone --recursive git://github.com/ariya/phantomjs.git  && \
+    cd phantomjs  && \
+    ./build.py  && \
+    cp ./bin/phantomjs /usr/bin 
 
 # env
 ENV CRAW_USER  dc-agent
@@ -76,7 +74,7 @@ RUN \
     useradd $CRAW_USER -M -p $CRAW_PW
 
 # Add supervisord conf, bootstrap.sh files
-ADD container-files /
+
 
 # - add log path
 VOLUME ["/data"]
