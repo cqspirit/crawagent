@@ -13,40 +13,7 @@ RUN \
   yum clean all && \
   easy_install supervisor
   
-# - install crawler env
-RUN \
-  yum groupinstall -y development && \
-  yum install -y zlib-dev openssl-devel sqlite-devel bzip2-devel wget curl && \
-  yum install -y xz-libs vim expect && \
-  yum clean all
-  
-# - RUN \
-# -   cd /tmp && \
-# -   wget --no-check-certificate https://pypi.python.org/packages/source/s/setuptools/setuptools-1.4.2.tar.gz && \
-# -   tar -xvf setuptools-1.4.2.tar.gz && \
-# -   cd setuptools-1.4.2 && \
-# -   python setup.py install && \
-  
-RUN \
-  curl https://raw.githubusercontent.com/pypa/pip/master/contrib/get-pip.py | python - && \
-  pip install virtualenv 
-  
-# - RUN \
-# -  cd /usr/bin/ && \ 
-# -  wget http://soft.6estates.com/phantomjs && \
-# -  chmod a+x phantomjs
-RUN \
-    yum install -y gcc gcc-c++ make flex bison gperf ruby  openssl-devel freetype-devel fontconfig-devel libicu-devel sqlite-devel libpng-devel libjpeg-devel && \
-    git clone --recursive git://github.com/ariya/phantomjs.git  && \
-    cd phantomjs  && \
-    ./build.py  && \
-    cp ./bin/phantomjs /usr/bin 
-# env
-ENV CRAW_USER  dc-agent
-ENV CRAW_PW    'rawler@next'
-RUN \
-    useradd $CRAW_USER -M -p $CRAW_PW
-    
+# install ssh server
 # 安装openssh-server和sudo软件包，并且将sshd的UsePAM参数设置成no  
 RUN yum install -y openssh-server sudo  
 RUN sed -i 's/UsePAM yes/UsePAM no/g' /etc/ssh/sshd_config  
@@ -64,12 +31,51 @@ RUN ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key
 RUN mkdir /var/run/sshd  
 EXPOSE 22  
 
+# - install crawler env
+RUN \
+  yum groupinstall -y development && \
+  yum install -y zlib-dev openssl-devel sqlite-devel bzip2-devel wget curl && \
+  yum install -y xz-libs vim expect && \
+  yum clean all
+  
+RUN \
+  cd /tmp && \
+  wget --no-check-certificate https://pypi.python.org/packages/source/s/setuptools/setuptools-1.4.2.tar.gz && \
+  tar -xvf setuptools-1.4.2.tar.gz && \
+  cd setuptools-1.4.2 && \
+  python setup.py install
+  
+RUN \
+  curl https://raw.githubusercontent.com/pypa/pip/master/contrib/get-pip.py | python - && \
+  pip install virtualenv && \
+  cd /config/crawler/  && \
+  pip install -r manager-requirement.txt && \
+  pip install -r agent-requirement.txt
+
+# - RUN \
+# -  cd /usr/bin/ && \ 
+# -  wget http://soft.6estates.com/phantomjs && \
+# -  chmod a+x phantomjs
+#RUN \
+#    yum install -y gcc gcc-c++ make flex bison gperf ruby  openssl-devel freetype-devel fontconfig-devel libicu-devel sqlite-devel libpng-devel libjpeg-devel && \
+#    git clone --recursive git://github.com/ariya/phantomjs.git  && \
+#    cd phantomjs  && \
+#    ./build.py  && \
+#    cp ./bin/phantomjs /usr/bin 
+
+# env
+ENV CRAW_USER  dc-agent
+ENV CRAW_PW    'rawler@next'
+RUN \
+    useradd $CRAW_USER -M -p $CRAW_PW
+
 # Add supervisord conf, bootstrap.sh files
 ADD container-files /
 # - add app path
-ADD /opt/crawl  /opt/crawl
+# ADD /opt/crawl  /opt/crawl
+ADD /public/log /tmp
 # - add log path
 VOLUME ["/data"]
-VOLUME ["/public/log/", "/tmp"] 
+VOLUME ["/opt/crawl", "/opt/crawl"] 
 
 ENTRYPOINT ["/config/bootstrap.sh"]
