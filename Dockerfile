@@ -27,9 +27,11 @@ RUN \
   yum update -y && \
   yum install -y epel-release && \
   yum install -y net-tools python-setuptools hostname inotify-tools yum-utils && \
-  yum clean all && \
-  easy_install supervisor
+  yum clean all
   
+RUN  \
+  yum install -y xz-libs vim expect curl && \
+  yum clean all
 # install ssh server
 # 安装openssh-server和sudo软件包，并且将sshd的UsePAM参数设置成no  
 #RUN yum install -y openssh-server sudo  
@@ -49,11 +51,6 @@ RUN \
 #EXPOSE 22  
 
 # - install crawler env
-RUN \
-  yum groups install -y 'Development Tools' && \
-  yum install -y zlib-dev openssl-devel sqlite-devel bzip2-devel wget curl && \
-  yum install -y xz-libs vim expect && \
-  yum clean all
   
 RUN \
   cd /tmp && \
@@ -64,7 +61,7 @@ RUN \
   
 RUN \
   curl https://raw.githubusercontent.com/pypa/pip/master/contrib/get-pip.py | python - && \
-  pip install virtualenv 
+  pip install supervisord 
 
 ADD container-files / 
 
@@ -72,10 +69,10 @@ ADD container-files /
 # -  cd /usr/bin/ && \ 
 # -  wget http://soft.6estates.com/phantomjs && \
 # -  chmod a+x phantomjs
-RUN \
-    yum install -y gcc gcc-c++ make flex bison gperf ruby  openssl-devel freetype-devel fontconfig-devel libicu-devel sqlite-devel libpng-devel libjpeg-devel && \
-    git clone --recursive git://github.com/ariya/phantomjs.git  && \
-    cd phantomjs  
+#RUN \
+#    yum install -y gcc gcc-c++ make flex bison gperf ruby  openssl-devel freetype-devel fontconfig-devel libicu-devel sqlite-devel libpng-devel libjpeg-devel && \
+#    git clone --recursive git://github.com/ariya/phantomjs.git  && \
+#    cd phantomjs  
 #    && \
 #    ./build.py  && \
 #    cp ./bin/phantomjs /usr/bin 
