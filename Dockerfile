@@ -21,7 +21,7 @@ RUN cd /tmp &&yum install tar xz -y && \
     
 RUN rm -rf /usr/bin/python && \
     ln -s /usr/local/bin/python2.7 /usr/bin/python && \
-    sed -i 's|#!/usr/bin/python|#!/usr/bin/python2.6|g' /usr/bin/yum && \
+    sed -i 's|#!/usr/bin/python|#!/usr/bin/python2.6|g' /usr/bin/yum
 
 RUN \
   yum update -y && \
