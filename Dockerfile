@@ -51,11 +51,6 @@ RUN \
 
 ADD container-files / 
 
-RUN \
-  cd /config/crawl/ && \
-  pip install -r manager-requirement.txt && \
-  pip install -r agent-agent-requirement.txt
-
 # - RUN \
 # -  cd /usr/bin/ && \ 
 # -  wget http://soft.6estates.com/phantomjs && \
@@ -66,6 +61,11 @@ RUN \
     cd phantomjs  && \
     ./build.py  && \
     cp ./bin/phantomjs /usr/bin 
+    
+RUN \
+  cd /config/crawl/ && \
+  pip install -r manager-requirement.txt && \
+  pip install -r agent-agent-requirement.txt
 
 # env
 ENV CRAW_USER  dc-agent
