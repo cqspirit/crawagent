@@ -58,9 +58,10 @@ ADD container-files /
 RUN \
     yum install -y gcc gcc-c++ make flex bison gperf ruby  openssl-devel freetype-devel fontconfig-devel libicu-devel sqlite-devel libpng-devel libjpeg-devel && \
     git clone --recursive git://github.com/ariya/phantomjs.git  && \
-    cd phantomjs  && \
-    ./build.py  && \
-    cp ./bin/phantomjs /usr/bin 
+    cd phantomjs  
+#    && \
+#    ./build.py  && \
+#    cp ./bin/phantomjs /usr/bin 
     
 RUN \
   cd /config/crawl/ && \
