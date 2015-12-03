@@ -33,7 +33,7 @@ EXPOSE 22
 
 # - install crawler env
 RUN \
-  yum groups mark install -y development && \
+  yum groups install -y 'Development Tools' && \
   yum install -y zlib-dev openssl-devel sqlite-devel bzip2-devel wget curl && \
   yum install -y xz-libs vim expect && \
   yum clean all
