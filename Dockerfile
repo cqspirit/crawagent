@@ -50,7 +50,7 @@ RUN \
   pip install virtualenv 
 
 ADD container-files / 
-ADD /opt/crawl /opt/crawl
+
 RUN \
   cd /config/crawl/ 
   pip install -r manager-requirement.txt && \
@@ -78,5 +78,6 @@ RUN \
 
 # - add log path
 VOLUME ["/data"]
+VOLUME ["/opt/crawl","/opt/crawl"]
 
 ENTRYPOINT ["/config/bootstrap.sh"]
