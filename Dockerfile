@@ -17,6 +17,8 @@ RUN \
 ADD container-files /
 
 RUN pip install --upgrade pip
+RUN yum install -y tar python-devel libxml2 libxml2-dev libxslt* zlib openssl 
+RUN yum install -y gcc libffi-devel python-devel openssl-devel 
 # Add crawler env
 RUN yum install -y wget && cd /usr/bin && \
     wget http://soft.6eimg.com/phantomjs && \
