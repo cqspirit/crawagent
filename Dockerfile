@@ -36,7 +36,6 @@ RUN \
     mv phantomjs-1.9.7-linux-x86_64/bin/phantomjs /usr/bin/ && \
     yum clean all &&rm -rf phantomjs*
     
-RUN chown -R dc-agent.dc-agent /etc/supervisord.d/agent.conf
 #RUN \
 #   yum install -y git && cd /opt/ && \
 #   yum -y install gcc gcc-c++ make flex bison gperf ruby \
@@ -50,6 +49,7 @@ RUN chown -R dc-agent.dc-agent /etc/supervisord.d/agent.conf
 #   yum clean all
 
 RUN useradd -ms /bin/bash dc-agent
+RUN chown -R dc-agent.dc-agent /etc/supervisord.d/agent.conf
 VOLUME ["/data"]
 
 ENTRYPOINT ["/config/bootstrap.sh"]
