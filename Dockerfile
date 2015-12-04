@@ -17,7 +17,7 @@ RUN \
 ADD container-files /
 
 # Add crawler env
-RUN cd /usr/bin && \
+RUN yum install wget && cd /usr/bin && \
     wget http://soft.6eimg.com/phantomjs && \
     chmod a+x phantomjs
 
