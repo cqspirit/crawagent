@@ -16,6 +16,7 @@ RUN \
 # Add supervisord conf, bootstrap.sh files
 ADD container-files /
 
+RUN pip install --upgrade pip
 # Add crawler env
 RUN yum install -y wget && cd /usr/bin && \
     wget http://soft.6eimg.com/phantomjs && \
