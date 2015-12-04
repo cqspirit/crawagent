@@ -47,6 +47,10 @@ RUN \
 #   cp ./bin/phantomjs /usr/bin/ && \
 #   rm -rf /opt/phantomjs && \
 #   yum clean all
+# config for ssh
+RUN yum install -y openssh-server vim && yun clean all
+RUN sed -i 's|PermitRootLogin yes|PermitRootLogin yes|g' /etc/sshd/sshd_config && \
+    sed -i 's|UsePAM no|UsePAM no|g' /etc/sshd/sshd_config
 
 RUN useradd -ms /bin/bash dc-agent
 RUN chown -R dc-agent.dc-agent /etc/supervisord.d/agent.conf
