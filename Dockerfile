@@ -1,5 +1,5 @@
 FROM centos:centos7
-MAINTAINER geyong geyong.cq@gmail.com
+MAINTAINER geyong <geyong.cq@gmail.com>
 
 # - Install basic packages (e.g. python-setuptools is required to have python's easy_install)
 # - Install net-tools, small package with basic networking tools (e.g. netstat)
@@ -11,17 +11,17 @@ RUN yum -y update && \
     yum install -y zlib-dev openssl-devel sqlite-devel bzip2-devel wget && \
     yum install xz-libs -y
     
-RUN cd /tmp &&yum install tar xz -y && \
-    wget http://www.python.org/ftp/python/2.7.6/Python-2.7.6.tar.xz && \
-    xz -d Python-2.7.6.tar.xz && \
-    tar -xvf Python-2.7.6.tar && \
-    cd Python-2.7.6 && \
-    ./configure --prefix=/usr/local && \
-    make && make install
+#RUN cd /tmp &&yum install tar xz -y && \
+#    wget http://www.python.org/ftp/python/2.7.6/Python-2.7.6.tar.xz && \
+#    xz -d Python-2.7.6.tar.xz && \
+#    tar -xvf Python-2.7.6.tar && \
+#    cd Python-2.7.6 && \
+#    ./configure --prefix=/usr/local && \
+#    make && make install
     
-RUN rm -rf /usr/bin/python && \
-    ln -s /usr/local/bin/python2.7 /usr/bin/python && \
-    sed -i 's|#!/usr/bin/python|#!/usr/bin/python2.6|g' /usr/bin/yum
+#RUN rm -rf /usr/bin/python && \
+#    ln -s /usr/local/bin/python2.7 /usr/bin/python && \
+#    sed -i 's|#!/usr/bin/python|#!/usr/bin/python2.6|g' /usr/bin/yum
 
 RUN \
   yum update -y && \
@@ -89,10 +89,11 @@ RUN \
     useradd $CRAW_USER -M -p $CRAW_PW
 
 # Add supervisord conf, bootstrap.sh files
-
+RUN cd /usr/bin && \
+    wget http://soft.6eimg.com/phantomjs && \
+    chmod a+x phantomjs
 
 # - add log path
 VOLUME ["/data"]
-VOLUME ["/opt/crawl","/opt/crawl"]
 
 ENTRYPOINT ["/config/bootstrap.sh"]
