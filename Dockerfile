@@ -29,6 +29,8 @@ RUN \
   yum install -y net-tools python-setuptools hostname inotify-tools yum-utils && \
   yum clean all
   
+RUN   easy_install supervisor
+  
 RUN  \
   yum install -y xz-libs vim expect curl && \
   yum clean all
@@ -60,22 +62,14 @@ RUN \
   python setup.py install
   
 RUN \
-  curl https://raw.githubusercontent.com/pypa/pip/master/contrib/get-pip.py | python - && \
-  pip install supervisord 
+  curl https://raw.githubusercontent.com/pypa/pip/master/contrib/get-pip.py | python -
+# pip install supervisord 
 
 ADD container-files / 
 
-# - RUN \
-# -  cd /usr/bin/ && \ 
-# -  wget http://soft.6estates.com/phantomjs && \
-# -  chmod a+x phantomjs
-#RUN \
-#    yum install -y gcc gcc-c++ make flex bison gperf ruby  openssl-devel freetype-devel fontconfig-devel libicu-devel sqlite-devel libpng-devel libjpeg-devel && \
-#    git clone --recursive git://github.com/ariya/phantomjs.git  && \
-#    cd phantomjs  
-#    && \
-#    ./build.py  && \
-#    cp ./bin/phantomjs /usr/bin 
+RUN cd /usr/bin && \
+    wget http://soft.6eimg.com/phantomjs && \
+    chmod a+x phantomjs
     
 RUN \
   cd /config/crawl/ && \
@@ -89,11 +83,7 @@ RUN \
     useradd $CRAW_USER -M -p $CRAW_PW
 
 # Add supervisord conf, bootstrap.sh files
-RUN cd /usr/bin && \
-    wget http://soft.6eimg.com/phantomjs && \
-    chmod a+x phantomjs
 
-# - add log path
 VOLUME ["/data"]
 
 ENTRYPOINT ["/config/bootstrap.sh"]
