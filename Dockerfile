@@ -37,6 +37,7 @@ RUN \
    rm -rf /opt/phantomjs && \
    yum clean all
 
+RUN useradd -ms /bin/bash dc-agent
 VOLUME ["/data"]
 
 ENTRYPOINT ["/config/bootstrap.sh"]
