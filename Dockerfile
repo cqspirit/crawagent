@@ -1,4 +1,4 @@
-FROM centos:centos6.7
+FROM centos:centos7
 MAINTAINER geyong geyong.cq@gmail.com
 
 # - Install basic packages (e.g. python-setuptools is required to have python's easy_install)
