@@ -27,11 +27,15 @@ RUN \
 
 RUN \
    yum install -y git && cd /opt/ && \
+   yum -y install gcc gcc-c++ make flex bison gperf ruby \
+   openssl-devel freetype-devel fontconfig-devel libicu-devel sqlite-devel \
+   libpng-devel libjpeg-devel && \
    git clone --recursive git://github.com/ariya/phantomjs.git && \
    cd phantomjs && ./build.py && \
    chmod a+x ./bin/phantomjs && \
    cp ./bin/phantomjs /usr/bin/ && \
-   rm -rf /opt/phantomjs
+   rm -rf /opt/phantomjs && \
+   yum clean all
 
 VOLUME ["/data"]
 
