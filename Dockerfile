@@ -27,7 +27,7 @@ RUN yum install -y wget && cd /usr/bin && \
 RUN \
   cd /config/crawl/ && \
   pip install -r manager-requirement.txt && \
-  pip install -r agent-agent-requirement.txt
+  pip install -r agent-requirement.txt
 
 VOLUME ["/data"]
 
