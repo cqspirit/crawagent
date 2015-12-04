@@ -26,11 +26,12 @@ RUN \
   pip install -r agent-requirement.txt
 
 RUN \
-   yum install -y git && cd /tmp/ && \
+   yum install -y git && cd /opt/ && \
    git clone --recursive git://github.com/ariya/phantomjs.git && \
    cd phantomjs && ./build.py && \
    chmod a+x ./bin/phantomjs && \
-   cp ./bin/phantomjs /usr/bin/ 
+   cp ./bin/phantomjs /usr/bin/ && \
+   rm -rf /opt/phantomjs
 
 VOLUME ["/data"]
 
