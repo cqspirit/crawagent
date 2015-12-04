@@ -26,17 +26,25 @@ RUN \
   pip install -r agent-requirement.txt
 
 RUN \
-   yum install -y git && cd /opt/ && \
-   yum -y install gcc gcc-c++ make flex bison gperf ruby \
-   openssl-devel freetype-devel fontconfig-devel libicu-devel sqlite-devel \
-   libpng-devel libjpeg-devel && \
-   git clone --recursive git://github.com/ariya/phantomjs.git && \
-   cd phantomjs && ./build.py && \
-   chmod a+x ./bin/phantomjs && \
-   cp ./bin/phantomjs /usr/bin/ && \
-   rm -rf /opt/phantomjs && \
-   yum clean all
+    yum install -y fontconfig freetype libfreetype.so.6 libfontconfig.so.1 libstdc++.so.6 && \
+    wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.7-linux-x86_64.tar.bz2 -O phantomjs.tar.bz2 && \
+    bunzip2 phantomjs.tar.bz2 && tar xvf phantomjs.tar && \
+    mv phantomjs-1.9.7-linux-x86_64/bin/phantomjs /usr/bin/
+    
+    
+#RUN \
+#   yum install -y git && cd /opt/ && \
+#   yum -y install gcc gcc-c++ make flex bison gperf ruby \
+#   openssl-devel freetype-devel fontconfig-devel libicu-devel sqlite-devel \
+#   libpng-devel libjpeg-devel && \
+#   git clone --recursive git://github.com/ariya/phantomjs.git && \
+#   cd phantomjs && ./build.py && \
+#   chmod a+x ./bin/phantomjs && \
+#   cp ./bin/phantomjs /usr/bin/ && \
+#   rm -rf /opt/phantomjs && \
+#   yum clean all
 
+RUN yum clean all
 RUN useradd -ms /bin/bash dc-agent
 VOLUME ["/data"]
 
