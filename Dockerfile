@@ -17,21 +17,26 @@ RUN \
 ADD container-files /
 
 RUN pip install --upgrade pip
-RUN yum install -y tar python-devel libxml2 libxml2-dev libxslt* zlib openssl 
-RUN yum install -y gcc libffi-devel python-devel openssl-devel 
+
+RUN \
+   yum install -y tar python-devel libxml2 libxml2-dev libxslt* zlib openssl \
+   gcc libffi-devel python-devel openssl-devel && \
+   yum clean all
 # Add crawler env
 RUN \
-  cd /config/crawl/ && \
-  pip install -r manager-requirement.txt && \
-  pip install -r agent-requirement.txt
+   cd /config/crawl/ && \
+   pip install -r manager-requirement.txt && \
+   pip install -r agent-requirement.txt
 
 RUN \
     yum install -y wget bzip2 fontconfig freetype libfreetype.so.6 libfontconfig.so.1 libstdc++.so.6 && \
+    cd /opt &&\
     wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.7-linux-x86_64.tar.bz2 -O phantomjs.tar.bz2 && \
     bunzip2 phantomjs.tar.bz2 && tar xvf phantomjs.tar && \
-    mv phantomjs-1.9.7-linux-x86_64/bin/phantomjs /usr/bin/
+    mv phantomjs-1.9.7-linux-x86_64/bin/phantomjs /usr/bin/ && \
+    yum clean all &&rm -rf phantomjs*
     
-    
+RUN chown -R dc-agent.dc-agent /etc/supervisord.d/agent.conf
 #RUN \
 #   yum install -y git && cd /opt/ && \
 #   yum -y install gcc gcc-c++ make flex bison gperf ruby \
@@ -44,7 +49,6 @@ RUN \
 #   rm -rf /opt/phantomjs && \
 #   yum clean all
 
-RUN yum clean all
 RUN useradd -ms /bin/bash dc-agent
 VOLUME ["/data"]
 
