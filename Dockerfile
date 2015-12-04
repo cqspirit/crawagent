@@ -20,14 +20,17 @@ RUN pip install --upgrade pip
 RUN yum install -y tar python-devel libxml2 libxml2-dev libxslt* zlib openssl 
 RUN yum install -y gcc libffi-devel python-devel openssl-devel 
 # Add crawler env
-RUN yum install -y wget && cd /usr/bin && \
-    wget http://soft.6eimg.com/phantomjs && \
-    chmod a+x phantomjs
-
 RUN \
   cd /config/crawl/ && \
   pip install -r manager-requirement.txt && \
   pip install -r agent-requirement.txt
+
+RUN \
+   yum install -y git && cd /tmp/ && \
+   git clone --recursive git://github.com/ariya/phantomjs.git && \
+   cd phantomjs && ./build.py && \
+   chmod a+x ./bin/phantomjs && \
+   cp ./bin/phantomjs /usr/bin/ 
 
 VOLUME ["/data"]
 
