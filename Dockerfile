@@ -30,11 +30,11 @@ RUN \
 
 RUN \
     yum install -y wget bzip2 fontconfig freetype libfreetype.so.6 libfontconfig.so.1 libstdc++.so.6 && \
-    cd /opt &&\
-    wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.7-linux-x86_64.tar.bz2 -O phantomjs.tar.bz2 && \
-    bunzip2 phantomjs.tar.bz2 && tar xvf phantomjs.tar && \
-    mv phantomjs-1.9.7-linux-x86_64/bin/phantomjs /usr/bin/ && \
-    yum clean all &&rm -rf phantomjs*
+    yum install -y libicu-devel libpng-devel libjpeg-devel && \
+    yum clean all && \
+    wget -P /usr/bin/ http://soft.6eimg.com/phantomjs-2.0.0.bin && \
+    mv /usr/bin/phantomjs-2.0.0.bin /usr/bin/phantomjs && \
+    chmod a+x /usr/bin/phantomjs
 
 RUN useradd -ms /bin/bash dc-agent
 RUN chown -R dc-agent.dc-agent /etc/supervisord.d/agent.conf
