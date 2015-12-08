@@ -35,22 +35,6 @@ RUN \
     bunzip2 phantomjs.tar.bz2 && tar xvf phantomjs.tar && \
     mv phantomjs-1.9.7-linux-x86_64/bin/phantomjs /usr/bin/ && \
     yum clean all &&rm -rf phantomjs*
-    
-#RUN \
-#   yum install -y git && cd /opt/ && \
-#   yum -y install gcc gcc-c++ make flex bison gperf ruby \
-#   openssl-devel freetype-devel fontconfig-devel libicu-devel sqlite-devel \
-#   libpng-devel libjpeg-devel && \
-#   git clone --recursive git://github.com/ariya/phantomjs.git && \
-#   cd phantomjs && ./build.py && \
-#   chmod a+x ./bin/phantomjs && \
-#   cp ./bin/phantomjs /usr/bin/ && \
-#   rm -rf /opt/phantomjs && \
-#   yum clean all
-# config for ssh
-#RUN yum install -y openssh-server vim && yum clean all
-#RUN sed -i 's|PermitRootLogin yes|PermitRootLogin yes|g' /etc/sshd/sshd_config && \
-#    sed -i 's|UsePAM no|UsePAM no|g' /etc/sshd/sshd_config
 
 RUN useradd -ms /bin/bash dc-agent
 RUN chown -R dc-agent.dc-agent /etc/supervisord.d/agent.conf
