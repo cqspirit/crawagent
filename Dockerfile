@@ -13,30 +13,31 @@ RUN \
   yum clean all && \
   easy_install supervisor
 
-RUN pip install --upgrade pip
+RUN \
+  pip install --upgrade pip
 
 RUN \
-   yum install -y tar python-devel libxml2 libxml2-dev libxslt* zlib openssl \
-   gcc libffi-devel python-devel openssl-devel && \
-   yum clean all
+  yum install -y tar python-devel libxml2 libxml2-dev libxslt* zlib openssl \
+  gcc libffi-devel python-devel openssl-devel && \
+  yum clean all
 
 RUN \
-    yum install -y wget bzip2 fontconfig freetype libfreetype.so.6 libfontconfig.so.1 libstdc++.so.6 && \
-    yum install -y libicu-devel libpng-devel libjpeg-devel && \
-    yum clean all   
+  yum install -y wget bzip2 fontconfig freetype libfreetype.so.6 libfontconfig.so.1 libstdc++.so.6 && \
+  yum install -y libicu-devel libpng-devel libjpeg-devel && \
+  yum clean all   
 
 # Add supervisord conf, bootstrap.sh files
 ADD container-files /
 # Add crawler env
 RUN \
-   cd /config/crawl/ && \
-   pip install -r manager-requirement.txt && \
-   pip install -r agent-requirement.txt
+  cd /config/crawl/ && \
+  pip install -r manager-requirement.txt && \
+  pip install -r agent-requirement.txt
 # install phantomjs
 RUN \
-    wget -P /usr/bin/ http://soft.6eimg.com/phantomjs-2.0.0.bin && \
-    mv /usr/bin/phantomjs-2.0.0.bin /usr/bin/phantomjs && \
-    chmod a+x /usr/bin/phantomjs
+  wget -P /usr/bin/ http://soft.6eimg.com/phantomjs-2.0.0.bin && \
+  mv /usr/bin/phantomjs-2.0.0.bin /usr/bin/phantomjs && \
+  chmod a+x /usr/bin/phantomjs
 
 RUN useradd -ms /bin/bash dc-agent
 RUN chown -R dc-agent.dc-agent /etc/supervisord.d/agent.conf
