@@ -1,5 +1,5 @@
 FROM centos:centos7
-MAINTAINER Marcin Ryzycki marcin@m12.io, Przemyslaw Ozgo linux@ozgo.info
+MAINTAINER geyong geyongnus@gmail.com
 
 # - Install basic packages (e.g. python-setuptools is required to have python's easy_install)
 # - Install net-tools, small package with basic networking tools (e.g. netstat)
