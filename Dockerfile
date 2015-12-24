@@ -43,7 +43,7 @@ RUN \
     echo '137.132.145.75 crawler.6estates.com' >>/etc/hosts
     
 RUN useradd -ms /bin/bash dc-agent
-RUN chown -R dc-agent.dc-agent /etc/supervisord.d/agent.conf
+# RUN chown -R dc-agent.dc-agent /etc/supervisord.d/agent.conf
 
 VOLUME ["/data"]
 
