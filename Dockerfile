@@ -42,8 +42,8 @@ RUN \
 #config dnsmasq
 RUN \
   sed -i 's|#resolv-file=|resolv-file=/etc/resolv.dnsmasq.conf|g' /etc/dnsmasq.conf && \
-  echo 'nameserver 8.8.8.8' >/etc/resolv.dnsmasq.conf && \
-  echo 'nameserver 8.8.4.4' >/etc/resolv.dnsmasq.conf
+  echo 'nameserver 8.8.8.8' > /etc/resolv.dnsmasq.conf && \
+  echo 'nameserver 8.8.4.4' >> /etc/resolv.dnsmasq.conf
 
 RUN useradd -ms /bin/bash dc-agent
 # RUN chown -R dc-agent.dc-agent /etc/supervisord.d/agent.conf
