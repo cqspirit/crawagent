@@ -9,7 +9,7 @@ MAINTAINER geyong geyongnus@gmail.com
 RUN \
   yum update -y && \
   yum install -y epel-release && \
-  yum install -y net-tools python-setuptools python-pip hostname inotify-tools yum-utils git && \
+  yum install -y net-tools python-setuptools python-pip hostname inotify-tools yum-utils git dnsmasq && \
   yum clean all && \
   easy_install supervisor
 
@@ -38,10 +38,7 @@ RUN \
   wget -P /usr/bin/ http://soft.6eimg.com/phantomjs-2.0.0.bin && \
   mv /usr/bin/phantomjs-2.0.0.bin /usr/bin/phantomjs && \
   chmod a+x /usr/bin/phantomjs
-  
-RUN \
-    echo '137.132.145.75 crawler.6estates.com' >>/etc/hosts
-    
+
 RUN useradd -ms /bin/bash dc-agent
 # RUN chown -R dc-agent.dc-agent /etc/supervisord.d/agent.conf
 
