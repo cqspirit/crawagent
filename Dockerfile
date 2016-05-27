@@ -9,7 +9,7 @@ MAINTAINER geyong geyongnus@gmail.com
 RUN \
   yum update -y && \
   yum install -y epel-release && \
-  yum install -y net-tools python-setuptools python-pip hostname inotify-tools yum-utils && \
+  yum install -y net-tools python-setuptools python-pip hostname inotify-tools yum-utils git && \
   yum clean all && \
   easy_install supervisor
 
